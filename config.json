@@ -1,7 +1,12 @@
 {
   "departements": ["47"],
   "limite_communes": 30,
-  "base_url": "https://engob.github.io/catnat/",
-  "formulaire_url": "",
+  "base_url": "https://engob.github.io/catnat",
+
+  "formulaire_action": "https://docs.google.com/forms/d/e/1FAIpQLSeHon9PkE2JVD51tZWmkr5fyRan9yfql6d6QHnO35O2qPFxug/formResponse",
+  "champ_email": "entry.1711032469",
+  "champ_commune": "entry.1955858196",
+  "formulaire_url": "https://docs.google.com/forms/d/e/1FAIpQLSeHon9PkE2JVD51tZWmkr5fyRan9yfql6d6QHnO35O2qPFxug/viewform",
+
   "verification_google": "4ejNUEfphOxCLilTTU2c7QJtHkFfKPMghrSjxdqQy2M"
 }
