@@ -1,0 +1,42 @@
+name: Compte rendu hebdomadaire
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"        # tous les lundis à 06h00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  rapport:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Écrire RAPPORT.md
+        run: python scripts/rapport.py
+
+      - name: Enregistrer le rapport
+        run: |
+          git config user.name  "catnat-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add RAPPORT.md
+          git diff --staged --quiet || (git commit -m "compte rendu du $(date -u +%F)" && git pull --rebase --autostash && git push)
+
+      - name: Ouvrir le compte rendu comme ticket
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create \
+            --title "Compte rendu CATNAT — $(date -u +%d/%m/%Y)" \
+            --body-file RAPPORT.md \
+            --label "compte-rendu" || \
+          gh issue create \
+            --title "Compte rendu CATNAT — $(date -u +%d/%m/%Y)" \
+            --body-file RAPPORT.md
