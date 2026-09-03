@@ -11,68 +11,125 @@ offre gratuite. Aucune carte bancaire nulle part.
 
 ## Ce que vous faites une fois — environ 25 minutes
 
-### 1. Créer le dépôt
+### 1. Créer le dépôt, en public
 
 Sur GitHub, **New repository**.
 
 - **Nom** : `VOTRE-PSEUDO.github.io` si ce dépôt n'existe pas déjà chez vous — c'est le meilleur
-  choix, le site sera à la racine du domaine et les adresses seront plus courtes.
-  Sinon, nommez-le `catnat`.
-- **Public** — obligatoire : les minutes GitHub Actions et GitHub Pages ne sont gratuites que
-  sur un dépôt public.
-- Ne cochez **rien** d'autre (pas de README, pas de .gitignore).
+  choix, le site sera à la racine du domaine. Sinon, nommez-le `catnat`.
+- **Public** — obligatoire : Actions et Pages ne sont gratuits que sur un dépôt public.
+- Ne cochez **rien** d'autre.
 
-### 2. Déposer les fichiers
+**À la fin de cette étape, vous connaissez l'adresse de votre futur site :**
 
-Sur la page du dépôt vide : **uploading an existing file**, puis glissez-déposez **tout le contenu
-de ce dossier** (y compris le dossier caché `.github`). Si le glisser-déposer ignore `.github`,
-créez les fichiers à la main avec **Add file > Create new file** en tapant le chemin complet
-`.github/workflows/quotidien.yml`, puis collez le contenu.
+| Nom du dépôt | Adresse du site |
+|---|---|
+| `VOTRE-PSEUDO.github.io` | `https://VOTRE-PSEUDO.github.io` |
+| `catnat` | `https://VOTRE-PSEUDO.github.io/catnat` |
 
-### 3. Deux réglages, et c'est tout
+Notez-la. Elle sert aux étapes 3, 4 et 5.
+
+### 2. Déposer les fichiers et régler deux cases
+
+Sur la page du dépôt vide : **uploading an existing file**, puis glissez tout le contenu du dossier.
+
+> Le dossier `.github` est caché sur Mac et sous Windows. S'il ne part pas avec le reste, créez ses
+> deux fichiers à la main via **Add file > Create new file** en tapant le chemin complet
+> `.github/workflows/quotidien.yml`, puis en collant le contenu.
+
+Puis les deux réglages, sans lesquels rien ne fonctionne :
 
 | Où | Réglage |
 |---|---|
 | **Settings > Pages** | *Build and deployment* → **Source : GitHub Actions** |
-| **Settings > Actions > General** | tout en bas, *Workflow permissions* → **Read and write permissions**, puis **Save** |
+| **Settings > Actions > General** | tout en bas, *Workflow permissions* → **Read and write permissions** → **Save** |
 
-Sans le second réglage, le robot ne pourra pas enregistrer les données ni ouvrir les comptes rendus.
+### 3. Mettre le site en ligne — une seule ligne de `config.json`
 
-### 4. Le formulaire d'inscription (gratuit, illimité)
-
-Sur [tally.so](https://tally.so), créez un formulaire à **deux champs** : *E-mail* et *Commune*.
-Publiez-le, copiez le lien (`https://tally.so/r/XXXXXX`).
-
-### 5. Google Search Console
-
-[search.google.com/search-console](https://search.google.com/search-console) → **Ajouter une
-propriété** → *Préfixe d'URL* → l'adresse de votre site. Choisissez la méthode **balise HTML** et
-copiez la valeur `content="..."` — c'est elle, pas la balise entière.
-
-### 6. Remplir `config.json`
-
-C'est le seul fichier que vous modifiez. Cliquez dessus dans GitHub, puis sur le crayon :
+Cliquez sur `config.json`, puis sur le crayon, et remplissez **uniquement** `base_url` avec
+l'adresse notée à l'étape 1. Laissez les deux autres champs vides pour l'instant.
 
 ```json
 {
   "departements": ["47"],
   "limite_communes": 30,
   "base_url": "https://VOTRE-PSEUDO.github.io",
-  "formulaire_url": "https://tally.so/r/XXXXXX",
-  "verification_google": "la-valeur-copiee-a-l-etape-5"
+  "formulaire_url": "",
+  "verification_google": ""
 }
 ```
 
-Si votre dépôt s'appelle `catnat` et non `VOTRE-PSEUDO.github.io`, alors
-`"base_url": "https://VOTRE-PSEUDO.github.io/catnat"`.
+**Commit changes.** Onglet **Actions** : le site se construit en 2 à 3 minutes. Ouvrez son adresse
+dans le navigateur pour vérifier qu'il s'affiche. **Il faut qu'il soit en ligne avant l'étape 4.**
 
-**Commit changes.** Le site se construit dans la foulée : onglet **Actions** pour regarder,
-2 à 3 minutes.
+### 4. Google Search Console — ce que c'est, et pourquoi
 
-### 7. Terminer la vérification et soumettre le plan du site
+Search Console est l'outil gratuit de Google qui vous dit **combien de vos pages sont dans son
+index, et combien de fois elles sont apparues dans les résultats**. Sans lui, vous êtes aveugle :
+c'est la source des deux chiffres qui décident du test. Vous avez déjà un compte, c'est votre compte
+Google.
 
-Une fois le site en ligne, retournez dans Search Console, cliquez **Vérifier**, puis
-**Sitemaps** → soumettez `sitemap.xml`.
+Sur [search.google.com/search-console](https://search.google.com/search-console) :
+
+1. **Ajouter une propriété**. Deux cases s'affichent : *Domaine* et *Préfixe d'URL*.
+   → **Préfixe d'URL**, celle de droite. (L'autre demande de modifier des DNS, que vous n'avez pas.)
+2. Collez l'adresse exacte de votre site, avec le `https://`, telle qu'elle s'affiche dans votre
+   navigateur. → **Continuer**.
+3. Une liste de méthodes de validation apparaît. Choisissez **Balise HTML**.
+4. Google affiche une ligne de ce genre :
+   `<meta name="google-site-verification" content="AbC123dEf456..." />`
+   **Copiez uniquement ce qu'il y a entre les guillemets après `content=`** — pas la balise entière,
+   pas les guillemets. Juste `AbC123dEf456...`
+5. **Laissez cet onglet ouvert.** Vous y reviendrez à l'étape 6.
+
+### 5. Coller le code dans `config.json`
+
+Retour sur GitHub, `config.json`, crayon. Collez la valeur copiée :
+
+```json
+  "verification_google": "AbC123dEf456..."
+```
+
+**Commit changes**, puis attendez 2 à 3 minutes que l'onglet **Actions** repasse au vert. Le code est
+maintenant présent dans toutes les pages du site — c'est le générateur qui l'y met tout seul.
+
+### 6. Cliquer sur « Valider »
+
+Revenez sur l'onglet Search Console laissé ouvert et cliquez sur **Valider**. Google va chercher la
+balise sur votre page d'accueil et confirme.
+
+> **« Échec de la validation » ?** Neuf fois sur dix, la nouvelle version du site n'est pas encore
+> publiée. Vérifiez que le job dans l'onglet **Actions** est terminé, attendez cinq minutes,
+> recliquez sur **Valider**. Pour en avoir le cœur net : ouvrez votre site, faites *Afficher le code
+> source de la page* et cherchez `google-site-verification`. S'il y est, la validation finira par
+> passer.
+
+### 7. Soumettre le plan du site, puis fermer l'onglet
+
+Toujours dans Search Console, menu de gauche → **Sitemaps**. Dans le champ, tapez simplement :
+
+```
+sitemap.xml
+```
+
+→ **Envoyer**. C'est ainsi que vous dites à Google : « voici la liste complète de mes pages, viens
+les chercher ». Le statut passera à *Réussite* en quelques heures.
+
+Facultatif mais utile le premier jour : dans la barre de recherche en haut, collez l'adresse d'une
+commune qui affiche un délai en cours, puis cliquez sur **Demander une indexation**. Faites-le pour
+cinq ou dix pages, pas plus.
+
+### 8. Le formulaire d'inscription (peut se faire plus tard)
+
+Sur [tally.so](https://tally.so), un formulaire à deux champs : *E-mail* et *Commune*. Publiez,
+copiez le lien `https://tally.so/r/XXXXXX`, collez-le dans `config.json` :
+
+```json
+  "formulaire_url": "https://tally.so/r/XXXXXX"
+```
+
+**Commit changes.** Tant que ce champ est vide, les pages affichent « Formulaire en cours
+d'ouverture » à la place du bouton : le site fonctionne quand même.
 
 ---
 
