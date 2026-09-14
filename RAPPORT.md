@@ -1,7 +1,7 @@
-# Compte rendu CATNAT — J+4
+# Compte rendu CATNAT — J+11
 
-- **Période couverte** : 2026-09-03 → 2026-09-07
-- **Exécutions enregistrées** : 5 jours sur 5 attendus — aucune interruption
+- **Période couverte** : 2026-09-03 → 2026-09-14
+- **Exécutions enregistrées** : 12 jours sur 12 attendus — aucune interruption
 - **Départements suivis** : 47
 - **Site** : https://engob.github.io/catnat
 
